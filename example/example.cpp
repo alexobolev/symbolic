@@ -1,5 +1,4 @@
 #include <cassert>
-
 #include "symbolic/names.hpp"
 
 class SystemAllocator final : public symbolic::alloc::IAllocator {
@@ -54,5 +53,18 @@ int main(int argc, char* argv[]) {
         assert(ftstep_f == ftstep_a);
 
         assert(joint1_f != ftstep_a);
+    }
+
+    // Third, mix and match!
+    {
+        auto joint1_m = Name::find_or_add("joint_01a");  // this one exists
+        assert(joint1_m == joint1_a);
+        assert(*joint1_m == "joint_01a");
+
+        auto joint9_m = Name::find_or_add("joint_09d");  // this one doesn't
+        assert(*joint9_m == "joint_09d");
+
+        auto joint9_n = Name::find_or_add("Joint_09D");  // same as above!
+        assert(joint9_n == joint9_m);
     }
 }
