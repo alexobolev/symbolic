@@ -136,9 +136,15 @@ namespace symbolic {
             return *reinterpret_cast<std::uint64_t const*>(this)
                 == *reinterpret_cast<std::uint64_t const*>(&other);
         }
+        inline bool operator!=(Name const other) const {
+            return !(*this == other);
+        }
 
         //* Static constructors.
         //* ========================================
+
+        /// Get a null-initialized name (use with extreme caution).
+        static Name empty();
 
         /// @brief Register a new name, invoking an assertion if it exists.
         /// @param str - ascii string to symbolize.

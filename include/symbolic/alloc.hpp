@@ -17,7 +17,7 @@ namespace symbolic::alloc {
     /// an instance of an 'IAllocator' implementation.
     class IAllocator {
     public:
-        ~IAllocator() = default;
+        virtual ~IAllocator() = default;
         virtual void* allocate(std::size_t size) noexcept = 0;
         virtual void deallocate(void* data) noexcept = 0;
     };

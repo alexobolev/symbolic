@@ -130,6 +130,10 @@ namespace symbolic {
         SYMBL_ASSERT_S(m_offset <= NameAllocator::MAX_ARENA_SIZE);
     }
 
+    Name Name::empty() {
+        return Name{};
+    }
+
     Name Name::add(std::string_view const str) {
         using namespace detail;
 
