@@ -18,12 +18,13 @@ BioWare's in-house optimization of it used in **Mass Effect Legendary Edition**.
 
 ## Limitations
 
-* Only ASCII strings.
-* Under 512 characters.
+* Requires 64-bit platform.
+* Only supports ASCII strings.
+* Strings must be under 512 characters.
 
 ## Usage
 
-Check the source-code in and link your library to it via CMake.
+Check the source-code in and link your library/executable to it via CMake.
 
 If not using CMake, you need to compile `src/names.cpp` and have the `include/`
 directory available for header lookup.

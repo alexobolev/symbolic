@@ -98,9 +98,7 @@ namespace symbolic {
         Name(std::uint64_t offset, std::uint64_t arena);
         Name(detail::NameChunk const* chunk);
 
-        inline detail::NameChunk const&
-        get_entry(detail::NameAllocator const& allocator = detail::g_name_allocator) const
-        {
+        inline detail::NameChunk const& get_entry() const {
             auto const* arena = detail::g_name_allocator.mp_arenas[m_arena_index];
             auto const* entry = reinterpret_cast<detail::NameChunk const*>(arena + m_offset);
             return *entry;
