@@ -1,5 +1,20 @@
-#include <cassert>
+#include <cstdio>
+#include <cstdlib>
+
 #include "symbolic/names.hpp"
+
+/// Assertion macro that works in release builds
+/// and prints out successful runs.
+#define check(cond) \
+    do { \
+        if (!(cond)) { \
+            std::fprintf(stderr, "Assertion failed: %s, file %s, line %d\n", \
+                #cond, __FILE__, __LINE__); \
+            std::abort(); \
+        } else { \
+            std::fprintf(stdout, "Passed: %s\n", #cond); \
+        } \
+    } while (0)
 
 class SystemAllocator final : public symbolic::alloc::IAllocator {
 public:
@@ -36,9 +51,9 @@ int main(int argc, char* argv[]) {
         joint2_a = Name::add("joint_02c");
         ftstep_a = Name::add("sfx/charge/heavy_footstep");
 
-        assert(joint1_a.str() == "joint_01a");
-        assert(joint2_a.str() == "joint_02c");
-        assert(ftstep_a.str() == "sfx/charge/heavy_footstep");
+        check(joint1_a.str() == "joint_01a");
+        check(joint2_a.str() == "joint_02c");
+        check(ftstep_a.str() == "sfx/charge/heavy_footstep");
     }
 
     // Second, find the added names that 100% exist.
@@ -48,23 +63,23 @@ int main(int argc, char* argv[]) {
         auto joint2_f = Name::find("joint_02c");
         auto ftstep_f = Name::find("sfx/charge/heavy_footstep");
 
-        assert(joint1_f == joint1_a);
-        assert(joint2_f == joint2_a);
-        assert(ftstep_f == ftstep_a);
+        check(joint1_f == joint1_a);
+        check(joint2_f == joint2_a);
+        check(ftstep_f == ftstep_a);
 
-        assert(joint1_f != ftstep_a);
+        check(joint1_f != ftstep_a);
     }
 
     // Third, mix and match!
     {
         auto joint1_m = Name::find_or_add("joint_01a");  // this one exists
-        assert(joint1_m == joint1_a);
-        assert(*joint1_m == "joint_01a");
+        check(joint1_m == joint1_a);
+        check(*joint1_m == "joint_01a");
 
         auto joint9_m = Name::find_or_add("joint_09d");  // this one doesn't
-        assert(*joint9_m == "joint_09d");
+        check(*joint9_m == "joint_09d");
 
         auto joint9_n = Name::find_or_add("Joint_09D");  // same as above!
-        assert(joint9_n == joint9_m);
+        check(joint9_n == joint9_m);
     }
 }
